@@ -1,0 +1,6 @@
+node_modules
+.next
+target
+dist
+coverage
+bun.lock
