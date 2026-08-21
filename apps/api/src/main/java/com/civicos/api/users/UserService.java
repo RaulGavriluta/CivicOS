@@ -17,7 +17,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User getUser(UUID id){
+    public User getUserById(UUID id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
