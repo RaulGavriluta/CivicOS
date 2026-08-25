@@ -1,4 +1,4 @@
-package com.civicos.api.config;
+package com.civicos.api.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

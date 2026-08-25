@@ -11,6 +11,7 @@ public record UserResponse(
         String email,
         String firstName,
         String lastName,
+        String phoneNumber,
         UserStatus status,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
@@ -21,6 +22,7 @@ public record UserResponse(
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getPhoneNumber(),
                 user.getStatus(),
                 user.getCreatedAt(),
                 user.getUpdatedAt()

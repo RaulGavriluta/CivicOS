@@ -24,6 +24,7 @@ class UserResponseTest {
         user.setPasswordHash("$argon2id$v=19$m=65536,t=3,p=4$secretHash");
         user.setFirstName("Andrei");
         user.setLastName("Ionescu");
+        user.setPhoneNumber("+40712345678");
         user.setStatus(UserStatus.ACTIVE);
         user.setCreatedAt(now);
         user.setUpdatedAt(now);
@@ -35,6 +36,7 @@ class UserResponseTest {
         assertThat(response.email()).isEqualTo("andrei.ionescu@civicos.ro");
         assertThat(response.firstName()).isEqualTo("Andrei");
         assertThat(response.lastName()).isEqualTo("Ionescu");
+        assertThat(response.phoneNumber()).isEqualTo("+40712345678");
         assertThat(response.status()).isEqualTo(UserStatus.ACTIVE);
         assertThat(response.createdAt()).isEqualTo(now);
         assertThat(response.updatedAt()).isEqualTo(now);
@@ -51,6 +53,7 @@ class UserResponseTest {
                 "elena.radu@civicos.ro",
                 "Elena",
                 "Radu",
+                "+40798765432",
                 UserStatus.ACTIVE,
                 now,
                 now
@@ -60,6 +63,7 @@ class UserResponseTest {
         assertThat(response.email()).isEqualTo("elena.radu@civicos.ro");
         assertThat(response.firstName()).isEqualTo("Elena");
         assertThat(response.lastName()).isEqualTo("Radu");
+        assertThat(response.phoneNumber()).isEqualTo("+40798765432");
         assertThat(response.status()).isEqualTo(UserStatus.ACTIVE);
         assertThat(response.createdAt()).isEqualTo(now);
         assertThat(response.updatedAt()).isEqualTo(now);
