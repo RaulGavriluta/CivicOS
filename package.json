@@ -2,6 +2,9 @@
   "name": "civicos",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write .",
