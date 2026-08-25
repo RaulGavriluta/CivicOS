@@ -16,6 +16,7 @@ public final class UserTestData {
         user.setPasswordHash("hashed-password");
         user.setFirstName("Ion");
         user.setLastName("Popescu");
+        user.setPhoneNumber("+40712345678");
         user.setStatus(UserStatus.ACTIVE);
 
         LocalDateTime now = LocalDateTime.now();

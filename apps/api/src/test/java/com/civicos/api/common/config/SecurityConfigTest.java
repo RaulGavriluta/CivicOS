@@ -1,4 +1,4 @@
-package com.civicos.api.config;
+package com.civicos.api.common.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

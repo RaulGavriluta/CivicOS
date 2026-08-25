@@ -1,0 +1,61 @@
+### 1. Get All Users
+GET {{host}}/users
+Accept: application/json
+
+### 2. Create New User
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "email": "marian.popa@civicos.ro",
+  "password": "SecurePassword123!",
+  "firstName": "Marian",
+  "lastName": "Popa",
+  "phoneNumber": "+40722334455"
+}
+
+> {%
+    client.global.set("createdUserId", response.body.id);
+%}
+
+### 3. Get User By ID
+GET {{host}}/users/{{createdUserId}}
+Accept: application/json
+
+### 4. Search User By Email
+GET {{host}}/users?email=marian.popa@civicos.ro
+Accept: application/json
+
+### 5. Update User Profile
+PUT {{host}}/users/{{createdUserId}}
+Content-Type: application/json
+
+{
+  "firstName": "Marian-George",
+  "lastName": "Popa",
+  "phoneNumber": "+40722999888"
+}
+
+### 6. Change Password
+PATCH {{host}}/users/{{createdUserId}}/password
+Content-Type: application/json
+
+{
+  "currentPassword": "SecurePassword123!",
+  "newPassword": "NewSuperSecret456!"
+}
+
+### 7. Deactivate User (Soft Delete)
+DELETE {{host}}/users/{{createdUserId}}
+
+### 8. Test Validation Error (400 Bad Request via RFC 7807)
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "email": "invalid-email-format",
+  "password": "short",
+  "firstName": "",
+  "lastName": "",
+  "phoneNumber": "abc"
+}

@@ -45,6 +45,7 @@ class UserRepositoryTest {
             assertThat(foundUser.getStatus()).isEqualTo(UserStatus.ACTIVE);
             assertThat(foundUser.getFirstName()).isEqualTo("Ion");
             assertThat(foundUser.getLastName()).isEqualTo("Popescu");
+            assertThat(foundUser.getPhoneNumber()).isEqualTo("+40712345678");
         }
     }
 
