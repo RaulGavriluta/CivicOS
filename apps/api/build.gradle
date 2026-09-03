@@ -27,6 +27,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.bouncycastle:bcprov-jdk18on:1.84'
 
 	compileOnly 'org.projectlombok:lombok'
