@@ -1,21 +1,66 @@
 services:
   postgres:
     image: postgres:17
-
     container_name: civicos-postgres
-
     restart: unless-stopped
-
     environment:
       POSTGRES_DB: civicos
       POSTGRES_USER: civicos
       POSTGRES_PASSWORD: civicos
-
     ports:
       - '5433:5432'
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U civicos -d civicos']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - civicos-network
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: civicos-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/civicos
+      SPRING_DATASOURCE_USERNAME: civicos
+      SPRING_DATASOURCE_PASSWORD: civicos
+      APP_CORS_ALLOWED_ORIGINS: http://localhost:3000
+    ports:
+      - '8080:8080'
+    networks:
+      - civicos-network
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: civicos-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+      WATCHPACK_POLLING: 'true'
+      WATCHPACK_POLLING_INTERVAL: '1000'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/public:/app/apps/web/public
+    networks:
+      - civicos-network
 
 volumes:
   postgres_data:
+
+networks:
+  civicos-network:
+    driver: bridge
