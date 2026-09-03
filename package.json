@@ -8,7 +8,9 @@
   "scripts": {
     "prepare": "husky",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "bun --filter web lint",
+    "build": "bun --filter web build"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.1",

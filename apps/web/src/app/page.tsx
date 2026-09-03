@@ -1,37 +1,42 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { fetchApi } from '@/lib/api-client';
 
 interface HealthResponse {
   status: string;
 }
 
-export default async function HomePage() {
-  let backendStatus = 'OFFLINE';
-  let isError = false;
+export default function Home() {
+  const [status, setStatus] = useState<string>('CHECKING...');
+  const [isUp, setIsUp] = useState<boolean>(false);
 
-  try {
-    const data = await fetchApi<HealthResponse>('/health', {
-      cache: 'no-store',
-    });
-    backendStatus = data.status;
-  } catch {
-    backendStatus = 'OFFLINE (Could not reach backend)';
-    isError = true;
-  }
+  useEffect(() => {
+    fetchApi<HealthResponse>('/health')
+      .then((data) => {
+        if (data && data.status === 'UP') {
+          setStatus('UP');
+          setIsUp(true);
+        } else {
+          setStatus('DOWN');
+          setIsUp(false);
+        }
+      })
+      .catch(() => {
+        setStatus('OFFLINE (Could not reach backend)');
+        setIsUp(false);
+      });
+  }, []);
 
   return (
-    <main style={{ padding: '3rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>CivicOS Platform</h1>
-      <p style={{ marginTop: '1rem', fontSize: '1.1rem' }}>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-black text-white">
+      <h1 className="text-4xl font-bold mb-8">CivicOS Platform</h1>
+      <div className="text-xl">
         Backend Connection:{' '}
-        <span
-          style={{
-            fontWeight: 'bold',
-            color: isError ? '#dc2626' : '#16a34a',
-          }}
-        >
-          {backendStatus}
+        <span className={isUp ? 'text-green-500 font-semibold' : 'text-red-500 font-semibold'}>
+          {status}
         </span>
-      </p>
+      </div>
     </main>
   );
 }
